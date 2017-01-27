@@ -21,13 +21,20 @@ def getFollowers(api, root_user, no_of_followers):
     # TODO: implement the method for fetching 'no_of_followers' followers of 'root_user'
     # rtype: list containing entries in the form of a tuple (follower, root_user)
 
-    followed = api.followers(root_user)
     r=range(no_of_followers)
     primary_followers = []
+    ids = []
+    x = tweepy.Cursor(api.followers, screen_name=root_user).pages(1)
+    for page in x:
+        for user in page:
+            ids.append(user.screen_name)
+        time.sleep(1)
     for i in r:
-        primary_followers.append((followed(i), root_user))
+        primary_followers.append((root_user,ids[i]))
+
 
     # Add code here to populate primary_followers
+    #print(primary_followers)
     return primary_followers
 
 # Q1.b - 7 Marks
@@ -35,14 +42,35 @@ def getSecondaryFollowers(api, followers_list, no_of_followers):
     # TODO: implement the method for fetching 'no_of_followers' followers for each entry in followers_list
     # rtype: list containing entries in the form of a tuple (follower, followers_list[i])    
     secondary_followers = []
-    # Add code here to populate secondary_followers
+    r=range(no_of_followers)
+    for i in range(len(followers_list)):
+        primary_follower = followers_list[i][1]
+        ids=[]
+        x= tweepy.Cursor(api.followers, screen_name=primary_follower).pages(1)
+        for page in x:
+            for user in page:
+                ids.append(user.screen_name)
+                time.sleep(1)
+        for j in r:
+            if j < len(ids):
+                secondary_followers.append((primary_follower, ids[j]))
+
     return secondary_followers
 
 # Q1.c - 5 Marks
 def getFriends(api, root_user, no_of_friends):
     # TODO: implement the method for fetching 'no_of_friends' friends of 'root_user'
     # rtype: list containing entries in the form of a tuple (root_user, friend)
+    r=range(no_of_friends)
     primary_friends = []
+    ids = []
+    x = tweepy.Cursor(api.friends, screen_name=root_user).pages(1)
+    for page in x:
+        for user in page:
+            ids.append(user.screen_name)
+        time.sleep(1)
+    for i in r:
+        primary_friends.append((root_user,ids[i]))
     # Add code here to populate primary_friends
     return primary_friends
 
@@ -51,14 +79,27 @@ def getSecondaryFriends(api, friends_list, no_of_friends):
     # TODO: implement the method for fetching 'no_of_friends' friends for each entry in friends_list
     # rtype: list containing entries in the form of a tuple (friends_list[i], friend)
     secondary_friends = []
-    # Add code here to populate secondary_friends
+    r=range(no_of_friends)
+    for i in range(len(friends_list)):
+        primary_follower = friends_list[i][1]
+        ids=[]
+        x= tweepy.Cursor(api.friends, screen_name=primary_follower).pages(1)
+        for page in x:
+            for user in page:
+                ids.append(user.screen_name)
+        for j in r:
+            if j< len(ids):
+                secondary_friends.append((primary_follower, ids[j]))
+
     return secondary_friends
 
 # Q1.b, Q1.c - 6 Marks
 def writeToFile(data, output_file):
     # write data to output_file
     # rtype: None
-    pass
+    with open(output_file, 'wb') as f:
+        writer = csv.writer(f)
+        writer.writerows(data)
 
 
 
@@ -96,7 +137,7 @@ def testSubmission():
 
     auth = tweepy.OAuthHandler(api_key, api_secret)
     auth.set_access_token(token, token_secret)
-    api = tweepy.API(auth)
+    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
     primary_followers = getFollowers(api, ROOT_USER, NO_OF_FOLLOWERS)
     secondary_followers = getSecondaryFollowers(api, primary_followers, NO_OF_FOLLOWERS)
