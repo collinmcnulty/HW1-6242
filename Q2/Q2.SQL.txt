@@ -1,0 +1,69 @@
+-- initial commands
+.headers off
+.separator ','
+
+-- (a) Import data
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (b) Build indexes
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (c) Quick computations.
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (d) Who won the most medals? 
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (e) Worldwide medal leaderboard
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (f) Performance leaderboard
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (g) Creating views
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (h) Count total pairs 
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (i) Create and import data into FTS table movie_overview.
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (i) part 1
+-- [insert sql statement(s) below]
+
+
+select '';
+
+-- (i) part 2
+-- [insert sql statement(s) below]
+
+
+select '';
