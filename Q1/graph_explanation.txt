@@ -1,0 +1,1 @@
+The goal of this graph design was to show the structure of the set as being primarily unconnected clusters (except at the origin) and to highlight the exceptions to that rule. The size helps the clusters' centers be visible, and the color highlights the nodes that belong to multiple clusters.

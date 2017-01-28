@@ -1,0 +1,3 @@
+Average Degree: 2.069 all the nodes but a few are one in and one out
+Diameter: 3 max number of directed connections
+Avg Path Length: 1.93 still looking mostly at just the central, primary friends, and secondary friends

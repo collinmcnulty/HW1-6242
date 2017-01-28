@@ -4,25 +4,50 @@
 
 -- (a) Import data
 -- [insert sql statement(s) below]
+create table athletes(
+id integer,
+name text,
+nationality text,
+gender text,
+dob numeric,
+height real,
+weight numeric,
+sport text,
+gold integer,
+silver integer,
+bronze integer);
+.import athletes.csv athletes
+
+create table countries(
+country text,
+code text,
+population integer,
+gdp_per_capita real);
+
+.import countries.csv countries
 
 
 select '';
 
 -- (b) Build indexes
 -- [insert sql statement(s) below]
-
+create index athletes_country_index on athletes (nationality);
+create index countries_country_index on countries (code);
 
 select '';
 
 -- (c) Quick computations.
 -- [insert sql statement(s) below]
+select count(name) as 'count_female_athletes_who_won_gold' from athletes where gold > 0 and gender = 'female';
+
+select count(name) as 'count_male_athletes_who_won_silver' from athletes where silver > 0 and gender = 'male';
 
 
 select '';
 
 -- (d) Who won the most medals? 
 -- [insert sql statement(s) below]
-
+select name, nationality, gold + silver + bronze as 'total_medals' from athletes ORDER BY total_medals DESC LIMIT 10;
 
 select '';
 
