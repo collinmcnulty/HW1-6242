@@ -47,31 +47,41 @@ select '';
 
 -- (d) Who won the most medals? 
 -- [insert sql statement(s) below]
-select name, nationality, gold + silver + bronze as 'total_medals' from athletes ORDER BY total_medals DESC LIMIT 10;
+select name, country, gold + silver + bronze as 'total_medals' from athletes join countries on nationality=code ORDER BY total_medals DESC LIMIT 10;
 
 select '';
 
 -- (e) Worldwide medal leaderboard
 -- [insert sql statement(s) below]
 
+select country, sum(gold) as 'gold_medal_sum', sum(silver) as 'silver_medal_sum',sum(bronze) as  'bronze_medal_sum' from countries join athletes on nationality=code GROUP BY country ORDER BY gold_medal_sum + silver_medal_sum + bronze_medal_sum DESC LIMIT 10;
 
 select '';
 
 -- (f) Performance leaderboard
 -- [insert sql statement(s) below]
-
+select country, sum(gold+silver+bronze)*1000/count(*) as 'performance_ratio', gdp_per_capita, weight/(height*height) as 'avg_bmi' from countries join athletes on nationality=code GROUP BY country ORDER BY performance_ratio DESC, country LIMIT 10;
 
 select '';
 
 -- (g) Creating views
 -- [insert sql statement(s) below]
+CREATE VIEW most_played_sports(sport, total_medals) AS 
+SELECT sport, sum(gold+silver+bronze) AS 'total medals'
+FROM athletes join countries on nationality=code 
+GROUP BY sport HAVING count(name)>500;
+
+select distinct m.sport as 'sport_1', e.sport as 'sport_2' from most_played_sports as 'm' cross join most_played_sports as 'e' 
+where m.total_medals > e.total_medals; 
 
 
 select '';
 
 -- (h) Count total pairs 
 -- [insert sql statement(s) below]
-
+select count(*) as 'count_total_pairs' 
+from (select distinct m.sport as 'sport_1', e.sport as 'sport_2' from most_played_sports as 'm' cross join most_played_sports as 'e' 
+where m.total_medals > e.total_medals); 
 
 select '';
 
@@ -83,7 +93,14 @@ select '';
 
 -- (i) part 1
 -- [insert sql statement(s) below]
+CREATE VIRTUAL TABLE movie_overview using fts4 (
+id integer,
+name text,
+year integer,
+overview text,
+popularity decimal);
 
+.import movie_overview.txt movie_overview
 
 select '';
 
