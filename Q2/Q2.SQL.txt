@@ -100,12 +100,12 @@ year integer,
 overview text,
 popularity decimal);
 
-.import movie_overview.txt movie_overview
-
+.import movie-overview.txt movie_overview
+SELECT Count(*) FROM movie_overview where overview match 'love -hate'; 
 select '';
 
 -- (i) part 2
 -- [insert sql statement(s) below]
-
-
+--select count(id) from movie_overview where overview match 'love NEAR/6 war';
+select count(id) from movie_overview where overview match 'love AND war';
 select '';

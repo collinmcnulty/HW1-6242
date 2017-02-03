@@ -1,0 +1,21 @@
+Event: 1609
+Venue: 140
+
+value.toDate("yyyy-MM-dd").datePart("weekday")+value.toDate("yyyy-MM-dd").toString(', MMMM dd, YYYY')
+
+nominal: venue
+ordinal: status
+
+or(value.contains("ENGLISH AND GERMAN"),value.contains("GERMAN AND ENGLISH"))
+
+value.substring(0,9)
+
+Based on "physical description":
+
+if(value.toLowercase().contains("card"),"card",
+if(value.toLowercase().contains("folder"),"folder",
+if(value.toLowercase().contains("booklet"),"booklet",
+if(value.toLowercase().contains("broadside"),"broadside",
+""))))
+
+This would allow grouping based on the materials used, which was previously buried in the description.
